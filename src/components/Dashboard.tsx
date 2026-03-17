@@ -45,17 +45,24 @@ export function Dashboard({ onLogout }: DashboardProps) {
   // Mock server URL.
   const serverUrl = 'wss://mock-server.livekit.cloud';
 
-  const resolveRoomId = (link: string) => {
-    // Regex to extract "alpha-room" from "https://dmeet.org/room/alpha-room"
-    const match = link.match(/room\/([^\/\?]+)/);
-    if (match && match[1]) {
-      setRoomId(match[1]);
-      return match[1];
-    } else {
-      setRoomId(null);
-      return null;
+ const resolveRoomId = (link: string) => {
+  // This looks for the ID specifically after "/join/" or "/room/"
+  // It stops before the "?" so it ignores the roomName=Kirka part
+  const match = link.match(/(?:join|room)\/([a-zA-Z0-9-]+)/);
+  
+  if (match && match[1]) {
+    setRoomId(match[1]);
+    return match[1];
+  } else {
+    // Fallback: If it's not a URL, treat the whole input as the ID
+    if (link.length > 5 && !link.includes('://')) {
+      setRoomId(link);
+      return link;
     }
-  };
+    setRoomId(null);
+    return null;
+  }
+};
 
   const fetchHistory = async (uid: string) => {
     try {
@@ -255,7 +262,11 @@ export function Dashboard({ onLogout }: DashboardProps) {
               <input
                 type="text"
                 value={meetingLink}
-                onChange={(e) => setMeetingLink(e.target.value)}
+                onChange={(e) => {
+                const val = e.target.value;
+                setMeetingLink(val);
+                resolveRoomId(val);
+                }}
                 onFocus={() => setFocusedInput(true)}
                 onBlur={() => setFocusedInput(false)}
                 className="bg-transparent border-none outline-none flex-1 text-phosphor placeholder-phosphor-dark/50 font-mono w-full"
