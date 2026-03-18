@@ -431,17 +431,17 @@ useEffect(() => {
             </p>
           </div>
         )}
-      </div>
 
-      {/* System Status */}
-      <div className="mt-8 text-phosphor-dark text-xs flex gap-4 w-full justify-between">
-        <div className="flex gap-4">
-          <span>STATUS: <span className="text-phosphor animate-pulse">ONLINE</span></span>
-          <span>|</span>
-          <span>MODULE: <span className="text-phosphor">LINK_RESOLVER</span></span>
+        {/* System Status */}
+        <div className="mt-8 text-phosphor-dark text-xs flex gap-4 w-full justify-between">
+          <div className="flex gap-4">
+            <span>STATUS: <span className="text-phosphor animate-pulse">ONLINE</span></span>
+            <span>|</span>
+            <span>MODULE: <span className="text-phosphor">LINK_RESOLVER</span></span>
+          </div>
+          <span>SECURE_CONNECTION</span>
         </div>
-        <span>SECURE_CONNECTION</span>
-      </div>
-    </div> // This is the final div closing the whole component
+      </div> {/* This closes the main max-w-3xl container */}
+    </div> // This closes the main flex-col container
   );
 }
