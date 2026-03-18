@@ -262,8 +262,9 @@ useEffect(() => {
   }
 
   return (
-    <div className="flex flex-col items-center justify-center h-full w-full max-w-3xl mx-auto">
-      <div className="w-full border border-phosphor-dark p-6 bg-void relative glow-box">
+    <div className="flex flex-col items-center justify-center h-full w-full max-w-6xl mx-auto py-10">
+      {/* 1. MAIN TERMINAL BOX */}
+      <div className="w-full max-w-3xl border border-phosphor-dark p-6 bg-void relative glow-box">
         {/* Terminal Header */}
         <div className="border-b border-phosphor-dark pb-2 mb-6 flex justify-between items-center">
           <span className="text-phosphor glow-text font-bold tracking-widest uppercase">
@@ -288,9 +289,9 @@ useEffect(() => {
                 type="text"
                 value={meetingLink}
                 onChange={(e) => {
-                const val = e.target.value;
-                setMeetingLink(val);
-                resolveRoomId(val);
+                  const val = e.target.value;
+                  setMeetingLink(val);
+                  resolveRoomId(val);
                 }}
                 onFocus={() => setFocusedInput(true)}
                 onBlur={() => setFocusedInput(false)}
@@ -310,43 +311,40 @@ useEffect(() => {
               <div className="text-phosphor glow-text text-xl font-bold mb-6 tracking-wider">{roomId}</div>
 
               <div className="space-y-4 mb-6 p-4 border border-phosphor-dark/30 bg-void/50">
-  <p className="text-[10px] text-phosphor-dark tracking-[0.2em] uppercase mb-2">
-    // LOBBY_CONFIGURATION
-  </p>
-  
-  <div>
-    <label className="block text-[10px] text-phosphor-dark mb-1 uppercase">Display Name</label>
-    <input 
-      type="text" 
-      placeholder="e.g., GAMER_LOUNGE"
-      value={roomName}
-      onChange={(e) => setRoomName(e.target.value)}
-      className="w-full bg-transparent border-b border-phosphor-dark/50 text-phosphor text-sm focus:border-phosphor outline-none py-1"
-    />
-  </div>
-
-  <div>
-    <label className="block text-[10px] text-phosphor-dark mb-1 uppercase">Thumbnail_URL</label>
-    <input 
-      type="text" 
-      placeholder="https://..."
-      value={thumbnailUrl}
-      onChange={(e) => setThumbnailUrl(e.target.value)}
-      className="w-full bg-transparent border-b border-phosphor-dark/50 text-phosphor text-sm focus:border-phosphor outline-none py-1"
-    />
-  </div>
-
-              <div className="flex items-center gap-2">
-              <input 
-              type="checkbox" 
-              checked={isPublic} 
-              onChange={(e) => setIsPublic(e.target.checked)}
-              className="accent-phosphor"
-              />
-              <label className="text-[10px] text-phosphor uppercase tracking-widest">
-              Broadcast to Public Lobby
-              </label>
-              </div>
+                <p className="text-[10px] text-phosphor-dark tracking-[0.2em] uppercase mb-2">
+                  // LOBBY_CONFIGURATION
+                </p>
+                <div>
+                  <label className="block text-[10px] text-phosphor-dark mb-1 uppercase">Display Name</label>
+                  <input 
+                    type="text" 
+                    placeholder="e.g., GAMER_LOUNGE"
+                    value={roomName}
+                    onChange={(e) => setRoomName(e.target.value)}
+                    className="w-full bg-transparent border-b border-phosphor-dark/50 text-phosphor text-sm focus:border-phosphor outline-none py-1"
+                  />
+                </div>
+                <div>
+                  <label className="block text-[10px] text-phosphor-dark mb-1 uppercase">Thumbnail_URL</label>
+                  <input 
+                    type="text" 
+                    placeholder="https://..."
+                    value={thumbnailUrl}
+                    onChange={(e) => setThumbnailUrl(e.target.value)}
+                    className="w-full bg-transparent border-b border-phosphor-dark/50 text-phosphor text-sm focus:border-phosphor outline-none py-1"
+                  />
+                </div>
+                <div className="flex items-center gap-2">
+                  <input 
+                    type="checkbox" 
+                    checked={isPublic} 
+                    onChange={(e) => setIsPublic(e.target.checked)}
+                    className="accent-phosphor"
+                  />
+                  <label className="text-[10px] text-phosphor uppercase tracking-widest">
+                    Broadcast to Public Lobby
+                  </label>
+                </div>
               </div>
               
               <button
@@ -372,8 +370,10 @@ useEffect(() => {
             </div>
           )}
         </div>
-        {/* GLOBAL LOBBY GALLERY - THE "FROGGY" VISUAL GRID */}
-      <div className="w-full max-w-6xl mt-16 px-4 pb-20">
+      </div>
+
+      {/* 2. GLOBAL LOBBY GALLERY (Placed outside the 3xl box for wide view) */}
+      <div className="w-full mt-16 px-4 pb-20">
         <div className="flex items-center gap-4 mb-10">
           <div className="h-[1px] flex-1 bg-phosphor-dark/20"></div>
           <h2 className="text-phosphor glow-text font-bold tracking-[0.4em] uppercase text-xs">
@@ -384,11 +384,7 @@ useEffect(() => {
 
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
           {publicRooms.map((room) => (
-            <div 
-              key={room.id} 
-              className="group border border-phosphor-dark/30 bg-black/40 hover:border-phosphor transition-all duration-500 relative"
-            >
-              {/* Card Image */}
+            <div key={room.id} className="group border border-phosphor-dark/30 bg-black/40 hover:border-phosphor transition-all duration-500 relative">
               <div className="aspect-video w-full overflow-hidden relative border-b border-phosphor-dark/30">
                 <img 
                   src={room.thumbnail_url || 'https://images.unsplash.com/photo-1550751827-4bd374c3f58b?auto=format&fit=crop&w=800&q=80'} 
@@ -399,8 +395,6 @@ useEffect(() => {
                   [ SIGNAL_LIVE ]
                 </div>
               </div>
-
-              {/* Card Info */}
               <div className="p-5">
                 <h3 className="text-phosphor font-bold text-xs truncate uppercase tracking-widest mb-1 group-hover:glow-text">
                   {room.room_name || "Unknown_Entity"}
@@ -423,7 +417,6 @@ useEffect(() => {
           ))}
         </div>
 
-     {/* Empty State */}
         {publicRooms.length === 0 && (
           <div className="text-center py-20 border border-dashed border-phosphor-dark/20">
             <p className="text-phosphor-dark text-xs uppercase tracking-widest animate-pulse">
@@ -431,17 +424,18 @@ useEffect(() => {
             </p>
           </div>
         )}
-      </div>
 
-      {/* System Status */}
-      <div className="mt-8 text-phosphor-dark text-xs flex gap-4 w-full justify-between">
-        <div className="flex gap-4">
-          <span>STATUS: <span className="text-phosphor animate-pulse">ONLINE</span></span>
-          <span>|</span>
-          <span>MODULE: <span className="text-phosphor">LINK_RESOLVER</span></span>
+        {/* 3. SYSTEM STATUS (Inside the bottom area) */}
+        <div className="mt-20 text-phosphor-dark text-xs flex gap-4 w-full justify-between border-t border-phosphor-dark/20 pt-4">
+          <div className="flex gap-4">
+            <span>STATUS: <span className="text-phosphor animate-pulse">ONLINE</span></span>
+            <span>|</span>
+            <span>MODULE: <span className="text-phosphor">LINK_RESOLVER</span></span>
+          </div>
+          <span>SECURE_CONNECTION</span>
         </div>
-        <span>SECURE_CONNECTION</span>
       </div>
-    </div>
+    </div> // Final closing div for the whole page
   );
 }
+  
