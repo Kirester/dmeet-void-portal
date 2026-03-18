@@ -31,16 +31,16 @@ interface DashboardProps {
 }
 
 export function Dashboard({ onLogout }: DashboardProps) {
-  const [meetingLink, setMeetingLink] = useState('');
-  const [roomId, setRoomId] = useState<string | null>(null);
-  const [focusedInput, setFocusedInput] = useState(false);
-  const [isJoined, setIsJoined] = useState(false);
-  const [recentSessions, setRecentSessions] = useState<Meeting[]>([]);
-  const [userId, setUserId] = useState<string | null>(null);
-  const [isJoining, setIsJoining] = useState(false);
-  const [history, setHistory] = useState<any[]>([]);
+   [meetingLink, setMeetingLink] = useState('');
+   [roomId, setRoomId] = useState<string | null>(null);
+   [focusedInput, setFocusedInput] = useState(false);
+   [isJoined, setIsJoined] = useState(false);
+   [recentSessions, setRecentSessions] = useState<Meeting[]>([]);
+   [userId, setUserId] = useState<string | null>(null);
+   [isJoining, setIsJoining] = useState(false);
+   [history, setHistory] = useState<any[]>([]);
 
-  const [roomName, setRoomName] = useState('');
+   [roomName, setRoomName] = useState('');
   const [thumbnailUrl, setThumbnailUrl] = useState('https://images.unsplash.com/photo-1550751827-4bd374c3f58b?auto=format&fit=crop&w=800&q=80');
   const [isPublic, setIsPublic] = useState(true);
 
@@ -114,6 +114,24 @@ export function Dashboard({ onLogout }: DashboardProps) {
 
     initUser();
   }, []);
+
+  const [publicRooms, setPublicRooms] = useState<any[]>([]);
+
+useEffect(() => {
+  const fetchPublicRooms = async () => {
+    const { data, error } = await supabase
+      .from('meetings')
+      .select('*')
+      .eq('is_public', true)
+      .order('created_at', { ascending: false });
+
+    if (!error && data) setPublicRooms(data);
+  };
+
+  fetchPublicRooms();
+  const interval = setInterval(fetchPublicRooms, 30000); 
+  return () => clearInterval(interval);
+}, []);
 
   useEffect(() => {
     resolveRoomId(meetingLink);
@@ -354,6 +372,65 @@ export function Dashboard({ onLogout }: DashboardProps) {
             </div>
           )}
         </div>
+        {/* GLOBAL LOBBY GALLERY - THE "FROGGY" VISUAL GRID */}
+      <div className="w-full max-w-6xl mt-16 px-4 pb-20">
+        <div className="flex items-center gap-4 mb-10">
+          <div className="h-[1px] flex-1 bg-phosphor-dark/20"></div>
+          <h2 className="text-phosphor glow-text font-bold tracking-[0.4em] uppercase text-xs">
+            Active_Void_Signals
+          </h2>
+          <div className="h-[1px] flex-1 bg-phosphor-dark/20"></div>
+        </div>
+
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
+          {publicRooms.map((room) => (
+            <div 
+              key={room.id} 
+              className="group border border-phosphor-dark/30 bg-black/40 hover:border-phosphor transition-all duration-500 relative"
+            >
+              {/* Card Image */}
+              <div className="aspect-video w-full overflow-hidden relative border-b border-phosphor-dark/30">
+                <img 
+                  src={room.thumbnail_url || 'https://images.unsplash.com/photo-1550751827-4bd374c3f58b?auto=format&fit=crop&w=800&q=80'} 
+                  className="w-full h-full object-cover opacity-50 group-hover:opacity-100 group-hover:scale-110 transition-all duration-700"
+                  alt="Room Cover"
+                />
+                <div className="absolute top-3 left-3 bg-black/90 border border-phosphor px-2 py-0.5 text-[7px] text-phosphor tracking-tighter animate-pulse shadow-lg">
+                  [ SIGNAL_LIVE ]
+                </div>
+              </div>
+
+              {/* Card Info */}
+              <div className="p-5">
+                <h3 className="text-phosphor font-bold text-xs truncate uppercase tracking-widest mb-1 group-hover:glow-text">
+                  {room.room_name || "Unknown_Entity"}
+                </h3>
+                <p className="text-phosphor-dark text-[8px] font-mono mb-5 truncate opacity-60">
+                  LOC_ID: {room.room_id.substring(0, 16)}...
+                </p>
+                <button 
+                  onClick={() => {
+                    setMeetingLink(room.link);
+                    resolveRoomId(room.link);
+                    window.scrollTo({ top: 0, behavior: 'smooth' });
+                  }}
+                  className="w-full py-2.5 border border-phosphor-dark/50 text-phosphor-dark text-[9px] font-bold group-hover:text-phosphor group-hover:border-phosphor hover:bg-phosphor/10 uppercase tracking-[0.2em] transition-all"
+                >
+                  [ SYNC_TO_PORTAL ]
+                </button>
+              </div>
+            </div>
+          ))}
+        </div>
+
+       {/* Empty State */}
+        {publicRooms.length === 0 && (
+          <div className="text-center py-20 border border-dashed border-phosphor-dark/20">
+            <p className="text-phosphor-dark text-xs uppercase tracking-widest animate-pulse">
+              Searching_for_active_broadcasts...
+            </p>
+          </div>
+        )}
       </div>
 
       {/* System Status */}
@@ -365,6 +442,6 @@ export function Dashboard({ onLogout }: DashboardProps) {
         </div>
         <span>SECURE_CONNECTION</span>
       </div>
-    </div>
+    </div> // This is the final div closing the whole component
   );
 }
