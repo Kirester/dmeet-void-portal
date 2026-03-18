@@ -34,7 +34,7 @@ interface DashboardProps {
 }
 
 export function Dashboard({ onLogout }: DashboardProps) {
-   const [meetingLink, setMeetingLink] = useState('');
+const [meetingLink, setMeetingLink] = useState('');
 const [roomId, setRoomId] = useState<string | null>(null);
 const [focusedInput, setFocusedInput] = useState(false);
 const [isJoined, setIsJoined] = useState(false);
@@ -118,8 +118,6 @@ const [publicRooms, setPublicRooms] = useState<any[]>([]);
 
     initUser();
   }, []);
-
-  const [publicRooms, setPublicRooms] = useState<any[]>([]);
 
 useEffect(() => {
   const fetchPublicRooms = async () => {
