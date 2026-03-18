@@ -423,7 +423,7 @@ useEffect(() => {
           ))}
         </div>
 
-       {/* Empty State */}
+     {/* Empty State */}
         {publicRooms.length === 0 && (
           <div className="text-center py-20 border border-dashed border-phosphor-dark/20">
             <p className="text-phosphor-dark text-xs uppercase tracking-widest animate-pulse">
@@ -431,18 +431,17 @@ useEffect(() => {
             </p>
           </div>
         )}
+      </div>
 
-               {/* System Status */}
-        <div className="mt-8 text-phosphor-dark text-xs flex gap-4 w-full justify-between">
-          <div className="flex gap-4">
-            <span>STATUS: <span className="text-phosphor animate-pulse">ONLINE</span></span>
-            <span>|</span>
-            <span>MODULE: <span className="text-phosphor">LINK_RESOLVER</span></span>
-          </div>
-          <span>SECURE_CONNECTION</span>
+      {/* System Status */}
+      <div className="mt-8 text-phosphor-dark text-xs flex gap-4 w-full justify-between">
+        <div className="flex gap-4">
+          <span>STATUS: <span className="text-phosphor animate-pulse">ONLINE</span></span>
+          <span>|</span>
+          <span>MODULE: <span className="text-phosphor">LINK_RESOLVER</span></span>
         </div>
-      </div> {/* This closes the gallery container (w-full max-w-6xl) */}
-      </div> {/* This closes the border/glow-box container */}
-    </div> {/* This closes the main flex-col container */}
+        <span>SECURE_CONNECTION</span>
+      </div>
+    </div>
   );
 }
