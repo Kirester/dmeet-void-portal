@@ -24,6 +24,9 @@ interface Meeting {
   room_id: string;
   link: string;
   created_at: string;
+  room_name?: string;      // Add this
+  thumbnail_url?: string;  // Add this
+  is_public?: boolean;
 }
 
 interface DashboardProps {
@@ -387,7 +390,7 @@ useEffect(() => {
             <div key={room.id} className="group border border-phosphor-dark/30 bg-black/40 hover:border-phosphor transition-all duration-500 relative">
               <div className="aspect-video w-full overflow-hidden relative border-b border-phosphor-dark/30">
                 <img 
-                  src={room.thumbnail_url || 'https://images.unsplash.com/photo-1550751827-4bd374c3f58b?auto=format&fit=crop&w=800&q=80'} 
+                  src={room?.thumbnail_url || 'https://images.unsplash.com/photo-1550751827-4bd374c3f58b?auto=format&fit=crop&w=800&q=80'}
                   className="w-full h-full object-cover opacity-50 group-hover:opacity-100 group-hover:scale-110 transition-all duration-700"
                   alt="Room Cover"
                 />
