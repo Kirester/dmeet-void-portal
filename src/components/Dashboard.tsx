@@ -249,14 +249,39 @@ useEffect(() => {
             <VideoConference />
           </div>
           
-          {/* Mock Overlay since we can't actually connect */}
-          <div className="absolute inset-0 flex items-center justify-center pointer-events-none bg-void/80 z-50">
-             <div className="text-center p-6 border border-phosphor glow-box bg-void">
-                <div className="text-phosphor glow-text font-bold text-xl mb-4">AWAITING_CONNECTION...</div>
-                <div className="text-phosphor-dark text-sm mb-2">TARGET: {roomId}</div>
-                <div className="text-phosphor-dark text-sm animate-pulse">ESTABLISHING_HANDSHAKE_WITH_SERVER</div>
-                <div className="text-phosphor-dark text-xs mt-4 opacity-50">(MOCK_MODE_ACTIVE: Server-SDK signing required for actual connection)</div>
-             </div>
+         {/* Mock Overlay - Refined 3-Column Interface */}
+        <div className="absolute inset-0 flex items-center justify-center bg-void/90 z-50">
+          <div className="w-full max-w-5xl grid grid-cols-1 md:grid-cols-3 border border-phosphor glow-box bg-void divide-y md:divide-y-0 md:divide-x divide-phosphor">
+            
+            {/* Box 1: Status */}
+            <div className="p-6 flex flex-col justify-center border-phosphor">
+              <div className="text-phosphor-dark text-[10px] uppercase mb-2 tracking-[0.2em]">// SYSTEM_LOG</div>
+              <div className="text-phosphor text-xs font-mono mb-1">D-TELECOM_ENGINE: LOADED</div>
+              <div className="text-phosphor-dark text-[10px] uppercase mt-4 mb-1 tracking-[0.2em]">// STATUS</div>
+              <div className="text-phosphor text-xs animate-pulse">PREVIEW_MODE_ACTIVE</div>
+            </div>
+
+            {/* Box 2: Connection details */}
+            <div className="p-6 flex flex-col justify-center text-center border-phosphor">
+              <div className="text-phosphor-dark text-[10px] uppercase mb-2 tracking-[0.2em]">TARGET_SIGNAL_ID</div>
+              <div className="text-phosphor text-[10px] mb-6 truncate font-mono bg-phosphor/5 p-1 border border-phosphor/20">{roomId}</div>
+              <div className="text-phosphor-dark glow-text text-[9px] animate-pulse tracking-widest">
+                ESTABLISHING_HANDSHAKE_WITH_SERVER...
+              </div>
+            </div>
+
+            {/* Box 3: Action Button */}
+            <div className="p-6 flex items-center justify-center">
+              <button 
+                onClick={() => window.open(meetingLink, '_blank')}
+                className="group relative w-full py-4 border border-phosphor bg-transparent hover:bg-phosphor transition-all duration-300 shadow-[0_0_10px_rgba(51,255,0,0.2)] hover:shadow-[0_0_20px_rgba(51,255,0,0.5)]"
+              >
+                <span className="text-phosphor font-bold uppercase tracking-[0.2em] text-[10px] group-hover:text-void transition-colors">
+                  [ INITIALIZE_UPLINK ]
+                </span>
+              </button>
+            </div>
+
           </div>
         </div>
       </div>
