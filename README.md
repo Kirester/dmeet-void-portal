@@ -6,10 +6,10 @@
 ---
 
 ## ⚠️ PROJECT_STATUS: INCOMPLETE
-This repository is currently a **Work in Progress**. Several core modules are operating in **MOCK_MODE** or are pending full integration.
+This repository is currently a **Work in Progress** and the project is incomplete. Several core modules are operating in **MOCK_MODE** or are pending full integration.
 
 ### 🔴 Known Limitations & Pending Tasks:
-* **Mock Handshake:** The "Establishing Handshake" screen is a UI placeholder. Real-time signaling logic is currently being bridged.
+* **Mock Handshake:** The dTelecom handshake is a mock and we are still bridging the backend. The "Establishing Handshake" screen is a UI placeholder.
 * **Manual Uplink:** The `[ INITIALIZE_UPLINK ]` button currently redirects to external dMeet instances rather than hosting natively.
 * **Database Scaling:** Supabase integration for the Public Lobby is functional but requires RLS (Row Level Security) hardening.
 * **UI Polish:** Mobile responsiveness for the 4-column Gallery Grid is still being optimized.
