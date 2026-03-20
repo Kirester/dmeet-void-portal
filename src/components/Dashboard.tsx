@@ -390,7 +390,7 @@ export function Dashboard({ onLogout }: DashboardProps) {
                 <p className="text-xs mb-2 opacity-50 text-phosphor">[ RECENT_SESSIONS ]</p>
                 {history.map((item) => (
                   <div key={item.id} className="text-xs mb-1 hover:bg-green-900/20 cursor-pointer text-phosphor" onClick={() => setMeetingLink(item.link || '')}>
-                     {new Date(item.created_at).toLocaleDateString()} &gt; {item.room_id}
+                    {new Date(item.created_at).toLocaleDateString()} &gt; {item.room_id}
                   </div>
                 ))}
               </div>
