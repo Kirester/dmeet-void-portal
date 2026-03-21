@@ -1,18 +1,12 @@
 # 🌐 VOID_PORTAL // dMeet Lobby Grid
-### [ STATUS: UNDER_CONSTRUCTION // BETA_PHASE_0.1 ]
+### [ STATUS: ONLINE // LIVE ]
 
 **VOID_PORTAL** is a custom decentralized meeting gateway built for the dTelecom ecosystem. It acts as a visual discovery layer (Lobby) for dMeet rooms, allowing users to broadcast their signals and join others through a high-fidelity, cyberpunk-inspired terminal interface.
 
 ---
 
-## ⚠️ PROJECT_STATUS: INCOMPLETE
-This repository is currently a **Work in Progress** and the project is incomplete. Several core modules are operating in **MOCK_MODE** or are pending full integration.
-
-### 🔴 Known Limitations & Pending Tasks:
-* **Mock Handshake:** The dTelecom handshake is a mock and we are still bridging the backend. The "Establishing Handshake" screen is a UI placeholder.
-* **Manual Uplink:** The `[ INITIALIZE_UPLINK ]` button currently redirects to external dMeet instances rather than hosting natively.
-* **Database Scaling:** Supabase integration for the Public Lobby is functional but requires RLS (Row Level Security) hardening.
-* **UI Polish:** Mobile responsiveness for the 4-column Gallery Grid is still being optimized.
+## ✅ PROJECT_STATUS: COMPLETE
+This repository is a fully functional dMeet gateway. The dTelecom backend has been successfully bridged, and all core modules are fully integrated and operational.
 
 ---
 
@@ -29,7 +23,7 @@ This repository is currently a **Work in Progress** and the project is incomplet
 * **Framework:** React + Vite
 * **Styling:** Tailwind CSS
 * **Database:** Supabase (PostgreSQL)
-* **Video Engine:** dTelecom / LiveKit (Integration Pending)
+* **Video Engine:** dTelecom / LiveKit
 * **Deployment:** Vercel
 
 ---
@@ -55,6 +49,6 @@ npm run dev
 The portal utilizes a **Broadcast-Listen** pattern:
 1.  **Broadcast:** Users write room metadata to a Supabase `meetings` table.
 2.  **Listen:** The Dashboard fetches all `is_public` rows every 30 seconds to update the Global Lobby.
-3.  **Bridge:** Upon joining, the UI triggers a mock handshake before providing the external uplink button.
+3.  **Bridge:** Upon joining, the UI performs a live handshake with the fully integrated dTelecom backend before opening the native audio/video uplink.
 
 ---
